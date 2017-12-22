@@ -1,0 +1,26 @@
+{
+  "languageModel": {
+    "intents": [
+      {
+        "name": "add",
+        "samples": [
+          "add two and four"
+        ],
+        "slots": []
+      },
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      }
+    ],
+    "invocationName": "my calculator"
+  }
+}
