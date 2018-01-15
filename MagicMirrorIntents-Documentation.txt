@@ -1,0 +1,16 @@
+***** Alexa Intents Documentation *****
+
+Clock
+- ShowClock: no vocal response, displays the clock
+- TellTime: vocally responds with the time, displays the clock
+
+Weather
+- WeatherToday: Access the current location, returns the day's weather (main event, high, low)
+- WeatherIn: Returns the Weather in a given location (AMAZON.AdministrativeArea ???)
+- WeatherOn: Returns the Weather on a specific day in the next 7 days
+- WeatherInOn: Returns the weather in a given location on a given day
+
+
+Schedule
+- ScheduleToday: Displays Calendar, reads out the days scheduled items
+- ScheduleOn: Displays the Calendar for a given date, reads out the days scheduled items

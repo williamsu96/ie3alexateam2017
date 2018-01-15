@@ -1,0 +1,139 @@
+# ****** Response Building ******
+    
+def build_speechlet_response(title, output, reprompt_text, should_end_session):
+    return 
+    {
+        'outputSpeech': 
+        {
+            'type': 'PlainText',
+            'text': output
+        },
+        'card': 
+        {
+            'type': 'Simple',
+            'title': title,
+            'content': output
+        },
+        'reprompt': 
+        {
+            'outputSpeech': 
+            {
+                'type': 'PlainText',
+                'text': reprompt_text
+            }
+        },
+        'shouldEndSession': should_end_session
+    }
+
+
+ def build_response(session_attributes, speechlet_response):
+    return 
+    {
+        'version': '1.0',
+        'sessionAttributes': session_attributes,
+        'response': speechlet_response
+    }    
+    
+
+# ****** Routing ******
+
+def lambda_handler(event, context):
+    if (event['session']['application']['applicationId'] !=
+        "amzn1.ask.skill.53b35bda-5a18-4f03-b559-6bd5a0ee1235"):
+    	raise ValueError("Invalid App ID")   
+    elif event['request']['type'] == "LaunchRequest":
+        return launchResponse()
+    elif event['request']['type'] == "IntentRequest":
+        return on_intent(event['request'], event['session'])
+    
+    
+    
+# ****** Event Routing ******
+
+def launchResponse():
+    session_attributes = {}
+    card_title = "Launch"
+    speech_output = "Hello, what would you like to do?"
+    reprompt_text = "What would you like to do?"
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session)) 
+        
+def on_intent(intent_request, session):
+    intent = intent_request['intent']
+    intent_name = intent_request['intent']['name']
+    
+    if intent_name == "ShowClock":
+        return ShowClock()
+    elif intent_name == "TellTime":
+    	return TellTime()
+    elif intent_name == "WeatherToday":
+    	return WeatherToday()
+    elif intent_name == "WeatherIn":
+		return WeatherIn()
+    elif intent_name == "WeatherOn":
+		return WeatherOn()
+    elif intent_name == "WeatherInOn":
+		return WeatherInOn()
+    elif intent_name == "ScheduleToday":
+		return ScheduleToday()
+    elif intent_name == "ScheduleOn":
+		return ScheduleOn()    
+    elif intent_name == "AMAZON.HelpIntent":
+        return launchResponse()
+    elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
+        return handle_session_end_request()
+    else:
+        raise ValueError("Invalid intent")
+        
+        
+        
+# ****** Intents ******        
+        
+def ShowClock():
+	# 'get' to get time?
+    # 'post' time on mirror
+    
+def TellTime();
+	# 'get' to get time
+    # 'post' to show time on mirror
+    # trigger alexa speach response, say the time
+    
+def WeatherToday():
+	# 'get' weather info
+    # 'post' weather info on mirror
+    
+def WeatherIn():
+    # one variable, the location
+    # 'get'  to get weather info
+    # 'post' weather info on mirror
+    
+def WeatherOn():
+    # one variable, the date
+    # 'get'  to get weather info
+    # 'post' weather info on mirror
+        
+def WeatherInOn():
+    # Two variable, the location and the date
+    # 'get'  to get weather info
+    # 'post' weather info on mirror
+        
+def ScheduleToday();
+    # Two variable, the location and the date
+    # 'get'  to get schedule info
+    # 'post' schedule info on mirror
+    
+def ScheduleOn():
+    # One variable, the date
+    # 'get'  to get schedule info
+    # 'post' schedule info on mirror
+             
+        
+def handle_session_end_request():
+    card_title = "Session Ended" 
+    speech_output = "Goodbye"
+    should_end_session = True
+    return build_response({}, build_speechlet_response(
+        card_title, speech_output, None, should_end_session))
+    
+    
