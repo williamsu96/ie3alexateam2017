@@ -1,6 +1,7 @@
 body{
-    background: rgb(230, 230, 242);
+    background: black;
     font-family: 'Roboto', sans-serif;
+    color: white;
 }
 
 
@@ -49,7 +50,7 @@ body{
     height: 5px;
     margin-top: 5px;
     margin-bottom: 8px;
-    background-color: indianred;
+    background-color: white;
 }
 
 .upcoming{
