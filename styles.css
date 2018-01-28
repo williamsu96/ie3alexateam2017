@@ -1,10 +1,58 @@
 body{
     background: rgb(230, 230, 242);
+    font-family: 'Roboto', sans-serif;
 }
 
-.title{
-    height: 50px;
-    text-align: center;
-    font-family: Arial;
-    font-size: 60px;
+
+#time-container{
+    width: 25%;
+    float: left;
+    padding: 15px;
+}
+
+#time{
+    font-size: 40px
+}
+
+#date{
+    padding-top: 5px;
+    font-size: 26px;
+}
+
+#weather-container{
+    width: 30%;
+    float: right;
+    padding: 15px;
+    text-align: right;
+}
+
+.main-icon{
+    font-size: 40px;
+}
+
+.small-icon{
+    font-size: 30px;
+}
+
+#today-degree{
+    font-size: 40px
+}
+
+#lohi{
+    width: 100%;
+    font-size: 26px;
+    padding-top: 5px;
+}
+
+#line{
+    width: 100%;
+    height: 5px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    background-color: indianred;
+}
+
+.upcoming{
+    font-size: 26px;
+    padding: 5px;
 }
