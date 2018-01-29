@@ -24,6 +24,33 @@ window.onload = function () {
         $("#lineandupcoming").toggle();
     })
 
+    var icons = ["<>", "app", "sdf"];
+    //console.log(data.city.name);
+    var list = data.list;
+    
+    var hourly3 = list.filter((date) => {
+        let timeW = moment(date.dt_txt);
+        //console.log(timeW.format("dddd"));
+        //console.log(moment().format("dddd"))
+        timeW.format("dddd") == moment().format("dddd");
+    })
+    console.log(hourly3);
+    
+    
+    var five_day = _.each(list, function (value) {
+        let timeW = moment(value.dt_txt);
+        console.log( timeW.format("ddd, MMM Do, hh:mm a"));
+    })
+    
+
+    function getWeatherIcon(weather) {
+        
+    }
+
+
+
+    
+
 
 }
 
