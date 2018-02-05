@@ -10,11 +10,11 @@ window.onload = function () {
     var date = new moment();
     var dayInMilliseconds = 1000 * 60 * 60 * 12;
 
-    // var updateTime = setInterval(function () {
-    //     //var time_display = $("#time").text(time.format("hh:mm:ss a"));
+    var updateTime = setInterval(function () {
+    //var time_display = $("#time").text(time.format("hh:mm:ss a"));
     var time = new moment();
     var time_display = document.getElementById("time").innerHTML = time.format("hh:mm a");
-    // }, 500);
+    }, 10);
 
     var date_display = $("#date").text(date.format("dddd, MMM Do"));
     //date_display();
