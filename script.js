@@ -26,7 +26,8 @@ window.onload = function () {
         "Rain": '<i class="small-icon wi wi-rain"></i>',
         "Snow": '<i class="small-icon wi wi-snow"></i>',
         "Atmosphere": '<i class="small-icon wi wi-dog"></i>',
-        "Mist": '<i class="small-icon wi wi-day-cloudy"></i>'
+        "Mist": '<i class="small-icon wi wi-day-cloudy"></i>',
+        "Haze":'<i class="small-icon wi wi-fog"></i>'
     }
 
     function Weather(data) {
