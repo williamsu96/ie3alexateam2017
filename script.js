@@ -2,8 +2,10 @@
 
 var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=Chicago&id=60201&units=imperial&APPID=";
 var apiKey = "898b69392d37088b5c01a7c774335e37";
+
 var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=Chicago&id=60201&units=imperial&APPID=";
 var url1 = forecastURL + apiKey;
+
 var myList;
 var url2 = weatherURL + apiKey;
 
