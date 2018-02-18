@@ -1,21 +1,69 @@
 //openweather key: 898b69392d37088b5c01a7c774335e37
 
-var weatherURL = "http://api.openweathermap.org/data/2.5/forecast?zip=60201&id=60201&units=imperial&APPID=";
+var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=Chicago&id=60201&units=imperial&APPID=";
 var apiKey = "898b69392d37088b5c01a7c774335e37";
-
-var url = weatherURL + apiKey;
+var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=Chicago&id=60201&units=imperial&APPID=";
+var url1 = forecastURL + apiKey;
 var myList;
-
+var url2 = weatherURL + apiKey;
 
 window.onload = function () {
 
-    fetch(url)
+    function displayToday(object) {
+        let timeW = moment(object.time);
+        object.lo < 10 ? object.lo = '0' + parseInt(object.lo) : object.lo = parseInt(object.lo)
+        object.hi < 10 ? object.hi = '0' + parseInt(object.hi) : object.hi = parseInt(object.hi)
+        $("#todayandtemp").append(`${object.icon} <span id="today-degree">${parseInt(object.temp)}°</span> <div id="lohi"> <span>lo: ${parseInt(object.lo)}° </span> <span>hi: ${parseInt(object.hi)}° </span></div>`)
+    }
+
+    var weatherIcons = {
+        "Thunderstorm": '<i class="small-icon wi wi-storm-showers"></i>',
+        "Clear": '<i class="small-icon wi wi-day-sunny"></i>',
+        "Clouds": '<i class="small-icon wi wi-cloud"></i>',
+        "Drizzle": '<i class="small-icon wi wi-rain"></i>',
+        "Rain": '<i class="small-icon wi wi-rain"></i>',
+        "Snow": '<i class="small-icon wi wi-snow"></i>',
+        "Atmosphere": '<i class="small-icon wi wi-dog"></i>',
+        "Mist": '<i class="small-icon wi wi-day-cloudy"></i>'
+    }
+
+    function Weather(data) {
+        this.time = data.dt_txt;
+        this.temp = data.main.temp;
+        this.lo = data.main.temp_min;
+        this.hi = data.main.temp_max;
+        this.weather = data.weather[0].main;
+        this.icon = weatherIcons[this.weather];
+        //this.weather = weatherIcons['data.weather[0].main']
+    }
+
+    fetch(url2)
+        .then((prom) => prom.json())
+        .then((data) => {
+            console.log(data);
+            var today = {};
+            today.time = data.dt;
+            today.temp = data.main.temp;
+            today.lo = data.main.temp_min;
+            today.hi = data.main.temp_max;
+            today.weather = data.weather[0].main;
+            today.icon = weatherIcons[today.weather];
+            displayToday(today);
+            
+        })
+        .then(() => {
+
+        })
+        .catch((err) =>
+            console.log(err)
+        );
+    fetch(url1)
         .then((data) => data.json())
         .then((prom) => {
             myList = prom.list;
             //console.log(myList);
         })
-        .then(()=> doStuff(myList))
+        .then(() => doStuff(myList))
         .catch((err) =>
             console.log(err)
         );
@@ -39,14 +87,9 @@ window.onload = function () {
             //$("#upcoming").append("<div></div>")
 
             // showHourly();
-        })
+        });
 
-        function displayToday(object) {
-            let timeW = moment(object.time);
-            object.lo < 10 ? object.lo = '0' + parseInt(object.lo) : object.lo = parseInt(object.lo)
-            object.hi < 10 ? object.hi = '0' + parseInt(object.hi) : object.hi = parseInt(object.hi)
-            $("#todayandtemp").append(`${object.icon} <span id="today-degree">${parseInt(object.temp)}°</span> <div id="lohi"> <span>lo: ${parseInt(object.lo)}° </span> <span>hi: ${parseInt(object.hi)}° </span></div>`)
-        }
+        
 
         function displayUpcomingDays(object) {
             let timeW = moment(object.time);
@@ -64,17 +107,10 @@ window.onload = function () {
             $("#upcoming").append(`<div>${timeW.format("hh:mm")} ${object.icon} ${parseInt(object.lo)}° ${parseInt(object.hi)}°</div>`)
         }
 
-        var weatherIcons = {
-            "Thunderstorm": '<i class="small-icon wi wi-storm-showers"></i>',
-            "Clear": '<i class="small-icon wi wi-day-sunny"></i>',
-            "Clouds": '<i class="small-icon wi wi-cloud"></i>',
-            "Drizzle": '<i class="small-icon wi wi-rain"></i>',
-            "Rain": '<i class="small-icon wi wi-rain"></i>',
-            "Snow": '<i class="small-icon wi wi-snow"></i>',
-            "Atmosphere": '<i class="small-icon wi wi-dog"></i>',
-        }
+        
         //console.log(data.city.name);
         var list = apiData;
+        console.log(list)
 
         var hourly3 = getThreeHours(list);
         var five_day = getFiveDays(list);
@@ -85,10 +121,10 @@ window.onload = function () {
         console.log(hourly3_objects);
         console.log(five_day_objects);
 
-        displayToday(five_day_objects[0])
+        //displayToday();
 
         function showDaily() {
-            for (let i = 1; i < five_day_objects.length; i++) {
+            for (let i = 0; i < five_day_objects.length; i++) {
                 displayUpcomingDays(five_day_objects[i]);
             }
         }
@@ -122,14 +158,6 @@ window.onload = function () {
 
                 return timeW.format("HH") == "12";
             })
-
-            if (Number(moment().format("HH") > 12)) {
-                newArr.unshift(Object.values(array)[0]);
-            }
-
-
-
-
             return newArr;
         }
 
