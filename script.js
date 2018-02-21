@@ -140,6 +140,7 @@ window.onload = function () {
         }
 
         showDaily();
+        showHourly();
 
         function getThreeHours(array) {
             var times = [];
