@@ -9,6 +9,9 @@ var url1 = forecastURL + apiKey;
 var myList;
 var url2 = weatherURL + apiKey;
 
+var server1;
+var server2;
+
 window.onload = function () {
 
     function displayToday(object) {
@@ -27,7 +30,7 @@ window.onload = function () {
         "Snow": '<i class="small-icon wi wi-snow"></i>',
         "Atmosphere": '<i class="small-icon wi wi-dog"></i>',
         "Mist": '<i class="small-icon wi wi-day-cloudy"></i>',
-        "Haze":'<i class="small-icon wi wi-fog"></i>'
+        "Haze": '<i class="small-icon wi wi-fog"></i>'
     }
 
     function Weather(data) {
@@ -52,7 +55,7 @@ window.onload = function () {
             today.weather = data.weather[0].main;
             today.icon = weatherIcons[today.weather];
             displayToday(today);
-            
+
         })
         .then(() => {
 
@@ -60,6 +63,7 @@ window.onload = function () {
         .catch((err) =>
             console.log(err)
         );
+
     fetch(url1)
         .then((data) => data.json())
         .then((prom) => {
@@ -85,14 +89,8 @@ window.onload = function () {
         //date_display();
         //setInterval(date_display, 50000);
 
-        $("#todayandtemp").click(function () {
-            $("#lineandupcoming").toggle();
-            //$("#upcoming").append("<div></div>")
 
-            // showHourly();
-        });
 
-        
 
         function displayUpcomingDays(object) {
             let timeW = moment(object.time);
@@ -100,25 +98,25 @@ window.onload = function () {
             object.hi < 10 ? object.hi = '0' + parseInt(object.hi) : object.hi = parseInt(object.hi)
             //console.log(object.lo);
 
-            $("#upcoming").append(`<div>${timeW.format("dddd")} ${object.icon} ${(object.lo)}° ${(object.hi)}°</div>`)
+            $("#futureDays").append(`<div "class='dayz'">${timeW.format("dddd")} ${object.icon} ${(object.lo)}° ${(object.hi)}°</div>`)
         }
 
         function displayUpcomingTimes(object) {
-            let timeW = moment(object.time);
+            let timeW = moment(object.time).subtract(6, 'hours');
+            //console.log(timeW);
             object.lo < 10 ? object.lo = '0' + parseInt(object.lo) : object.lo = parseInt(object.lo)
             object.hi < 10 ? object.hi = '0' + parseInt(object.hi) : object.hi = parseInt(object.hi)
-            $("#upcoming").append(`<div>${timeW.format("hh:mm")} ${object.icon} ${parseInt(object.lo)}° ${parseInt(object.hi)}°</div>`)
+            $("#futureTimes").append(`<div "class='timez'">${timeW.format("hh:mm a")} ${object.icon} ${parseInt(object.lo)}° ${parseInt(object.hi)}°</div>`)
         }
 
-        
+
         //console.log(data.city.name);
         var list = apiData;
         console.log(list)
 
         var hourly3 = getThreeHours(list);
         var five_day = getFiveDays(list);
-        //console.log(hourly3);
-        //console.log(five_day);
+
         var hourly3_objects = makeWeatherObjects(hourly3);
         var five_day_objects = makeWeatherObjects(five_day);
         console.log(hourly3_objects);
@@ -141,6 +139,10 @@ window.onload = function () {
 
         showDaily();
         showHourly();
+        $('#futureDays').hide();
+        $('#futureTimes').hide();
+        $('#Calendar').hide();
+
 
         function getThreeHours(array) {
             var times = [];
@@ -148,9 +150,6 @@ window.onload = function () {
             for (let i = 0; i < 5; i++) {
                 times.push(Object.values(array)[i]);
             }
-
-            //console.log(times);
-
             return times;
         }
 
@@ -182,7 +181,58 @@ window.onload = function () {
             this.icon = weatherIcons[this.weather];
             //this.weather = weatherIcons['data.weather[0].main']
         }
+        var state = 0;
+        $("#todayandtemp").click(function () {
+            toggle(state);
+            state++;
+            if (state >= 4) state = 0;
+        });
 
     }
 
+    var state = 0;
+
+    function myFunction() {
+        setInterval(function () {
+            fetch('http://numbersapi.com/random?min=0&max=4')
+                .then((prom) => prom.json())
+                .then((data) => {
+
+                    toggle(state);
+                    state++;
+                    if (state >= 4) state = 0;
+                });
+        }, 1000);
+    }
+
+    function toggle(state) {
+        switch (state) {
+            case 0:
+                $('#futureDays').hide();
+                $('#futureTimes').hide();
+                $('#Calendar').hide();
+                break;
+            case 1:
+                $('#futureDays').show();
+                $('#futureTimes').hide();
+                $('#Calendar').hide();
+                break;
+            case 2:
+                $('#futureDays').hide();
+                $('#futureTimes').show();
+                $('#Calendar').hide();
+                break;
+            case 3:
+                $('#futureDays').hide();
+                $('#futureTimes').hide();
+                $('#Calendar').show();
+                break;
+            default:
+                $('#futureDays').hide();
+                $('#futureTimes').hide();
+                $('#Calendar').hide();
+                break;
+        }
+
+    }
 }
