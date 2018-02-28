@@ -181,7 +181,7 @@ window.onload = function () {
             this.icon = weatherIcons[this.weather];
             //this.weather = weatherIcons['data.weather[0].main']
         }
-        var state = 0;
+        var state = 1;
         $("#todayandtemp").click(function () {
             toggle(state);
             state++;
@@ -208,24 +208,24 @@ window.onload = function () {
     function toggle(state) {
         switch (state) {
             case 0:
-                $('#futureDays').hide();
-                $('#futureTimes').hide();
-                $('#Calendar').hide();
+                $('#futureDays').fadeOut(500);
+                $('#futureTimes').fadeOut(500);
+                $('#Calendar').fadeOut(500);
                 break;
             case 1:
-                $('#futureDays').show();
+                $('#futureDays').fadeIn(1000);
                 $('#futureTimes').hide();
                 $('#Calendar').hide();
                 break;
             case 2:
                 $('#futureDays').hide();
-                $('#futureTimes').show();
                 $('#Calendar').hide();
+                $('#futureTimes').fadeIn(1000);
                 break;
             case 3:
                 $('#futureDays').hide();
                 $('#futureTimes').hide();
-                $('#Calendar').show();
+                $('#Calendar').fadeIn(1000);
                 break;
             default:
                 $('#futureDays').hide();
