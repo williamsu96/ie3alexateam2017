@@ -44,9 +44,39 @@ window.onload = function () {
         this.icon = weatherIcons[this.weather];
         //this.weather = weatherIcons['data.weather[0].main']
     }
-    //gets the aweaterh for right now
-    fetch(url2)
-        .then((prom) => prom.json())
+    //gets the weather for right now
+    fetch(weatherServer, {
+        method: 'GET'
+    })
+        .then(r => r.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch((err) => console.log(err))
+
+        //Gets the flag
+    fetch(flagsServer, {
+        method: 'GET'
+    })
+        .then(r => r.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch((err) => console.log(err))
+        
+
+    //gets the forecast
+    fetch(forecastServer, {
+        method: 'GET'
+    })
+        .then(r => r.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch((err) => console.log(err))
+
+
+        /*
         .then((data) => {
             console.log(data);
             var today = {};
@@ -57,15 +87,12 @@ window.onload = function () {
             today.weather = data.weather[0].main;
             today.icon = weatherIcons[today.weather];
             displayToday(today);
+            
+        })*/
 
-        })
-        .then(() => {
+    
 
-        })
-        .catch((err) =>
-            console.log(err)
-        );
-    //gets the forecast
+    /*
     fetch(url1)
         .then((data) => data.json())
         .then((prom) => {
@@ -75,7 +102,7 @@ window.onload = function () {
         .then(() => doStuff(myList))
         .catch((err) =>
             console.log(err)
-        );
+        );*/
 
     function doStuff(apiData) {
         var date = new moment();
