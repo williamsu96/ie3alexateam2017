@@ -9,8 +9,10 @@ var url1 = forecastURL + apiKey;
 var myList;
 var url2 = weatherURL + apiKey;
 
-var server1;
-var server2;
+var weatherServer = "https://alexa-magic-mirror.herokuapp.com/display/current";
+var forecastServer = "https://alexa-magic-mirror.herokuapp.com/display/forecast";
+var flagsServer = "https://alexa-magic-mirror.herokuapp.com/display/getflag";
+//flags: "current" / "forecast"/ "hide" / "calendar";
 
 window.onload = function () {
 
@@ -42,7 +44,7 @@ window.onload = function () {
         this.icon = weatherIcons[this.weather];
         //this.weather = weatherIcons['data.weather[0].main']
     }
-
+    //gets the aweaterh for right now
     fetch(url2)
         .then((prom) => prom.json())
         .then((data) => {
@@ -63,7 +65,7 @@ window.onload = function () {
         .catch((err) =>
             console.log(err)
         );
-
+    //gets the forecast
     fetch(url1)
         .then((data) => data.json())
         .then((prom) => {
@@ -88,9 +90,6 @@ window.onload = function () {
         var date_display = $("#date").text(date.format("dddd, MMM Do"));
         //date_display();
         //setInterval(date_display, 50000);
-
-
-
 
         function displayUpcomingDays(object) {
             let timeW = moment(object.time);
@@ -190,16 +189,32 @@ window.onload = function () {
 
     }
 
-    var state = 0;
 
-    function myFunction() {
+
+    function getFlags() {
+        var state = 0;
         setInterval(function () {
-            fetch('http://numbersapi.com/random?min=0&max=4')
+            fetch()
                 .then((prom) => prom.json())
                 .then((data) => {
-
+                    switch (data) {
+                        case "hide":
+                            state = 0;
+                            break;
+                        case "current":
+                            state = 1;
+                            break;
+                        case "forecast":
+                            state = 2;
+                            break;
+                        case "calendar":
+                            state = 3;
+                            break;
+                        default:
+                            state = 0;
+                            break;
+                    }
                     toggle(state);
-                    state++;
                     if (state >= 4) state = 0;
                 });
         }, 1000);
@@ -207,22 +222,26 @@ window.onload = function () {
 
     function toggle(state) {
         switch (state) {
+            //displays nothin
             case 0:
                 $('#futureDays').fadeOut(500);
                 $('#futureTimes').fadeOut(500);
                 $('#Calendar').fadeOut(500);
                 break;
+                //displays the 3hourly data
             case 1:
-                $('#futureDays').fadeIn(1000);
-                $('#futureTimes').hide();
-                $('#Calendar').hide();
-                break;
-            case 2:
                 $('#futureDays').hide();
                 $('#Calendar').hide();
                 $('#futureTimes').fadeIn(1000);
                 break;
+            case 2:
+                //displays the forecast
+                $('#futureDays').fadeIn(1000);
+                $('#futureTimes').hide();
+                $('#Calendar').hide();
+                break;
             case 3:
+                //displays the calendar
                 $('#futureDays').hide();
                 $('#futureTimes').hide();
                 $('#Calendar').fadeIn(1000);
@@ -233,6 +252,5 @@ window.onload = function () {
                 $('#Calendar').hide();
                 break;
         }
-
     }
 }
