@@ -138,18 +138,20 @@ window.onload = function () {
             }
         }
 
-        function showCalendar() {
-            for (let i = 0; i < myEvents.length; i++) {
-                displayCalendar(myEvents[i]);
-            }
-        }
-
         function displayCalendar(calEvent) {
             //var when = event.start.dateTime;
             var when = moment(calEvent.start.dateTime).format("hh:mm a");
             var summary = calEvent.summary;
             $('#Calendar').append(`<div> ${when} ${summary} </div>`);
         }
+
+        function showCalendar() {
+            for (let i = 0; i < myEvents.length; i++) {
+                displayCalendar(myEvents[i]);
+            }
+        }
+
+        
 
 
 
@@ -247,29 +249,34 @@ window.onload = function () {
                 $('#futureDays').fadeOut(500);
                 $('#futureTimes').fadeOut(500);
                 $('#Calendar').fadeOut(500);
+                $('#line').fadeOut(1000);
                 break;
                 //displays the 3hourly data
             case 1:
                 $('#futureDays').hide();
                 $('#Calendar').hide();
                 $('#futureTimes').fadeIn(1000);
+                $('#line').fadeIn(500);
                 break;
             case 2:
                 //displays the forecast
                 $('#futureDays').fadeIn(1000);
                 $('#futureTimes').hide();
                 $('#Calendar').hide();
+                $('#line').fadeIn(500);
                 break;
             case 3:
                 //displays the calendar
                 $('#futureDays').hide();
                 $('#futureTimes').hide();
                 $('#Calendar').fadeIn(1000);
+                $('#line').fadeIn(500);
                 break;
             default:
                 $('#futureDays').hide();
                 $('#futureTimes').hide();
                 $('#Calendar').hide();
+                $('#line').fadeOut(1000);
                 break;
         }
     }
