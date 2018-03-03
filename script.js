@@ -53,7 +53,7 @@ function updateSigninStatus(isSignedIn) {
         console.log("You are signed in");
         $('#spooky').hide();
         listUpcomingEvents();
-        
+
 
     } else {
         authorizeButton.style.display = 'block';
@@ -111,13 +111,12 @@ function listUpcomingEvents() {
             console.log('No upcoming events found.');
         }
     }).then(() => {
-        if(myEvents.length > 0){
+        if (myEvents.length > 0) {
             console.log("The event array is filled!");
+        } else {
+            console.log("This is the event array is empty :(");
         }
-        else{
-            console.log("This is the event array is empty :(" );
-        }
-        
+
         getForecast();
     });
 }
@@ -193,17 +192,17 @@ fetch(url1)
     );
 
 
-function getForecast(){
+function getForecast() {
     fetch(url2)
-    .then((data) => data.json())
-    .then((prom) => {
-        myList = prom.list;
-        //console.log(myList);
-    })
-    .then(() => doStuff(myList))
-    .catch((err) =>
-        console.log(err)
-    );
+        .then((data) => data.json())
+        .then((prom) => {
+            myList = prom.list;
+            //console.log(myList);
+        })
+        .then(() => doStuff(myList))
+        .catch((err) =>
+            console.log(err)
+        );
 }
 
 
@@ -267,17 +266,17 @@ function doStuff(apiData) {
         }
     }
 
-    function displayCalendar(calEvent) {
+    function displaycalendar(calEvent) {
         //var when = event.start.dateTime;
         var when = moment(calEvent.start.dateTime).format("hh:mm a");
         var summary = calEvent.summary;
-        $('#Calendar').append(`<div> ${when} ${summary} </div>`);
+        $('#calendar').append(`<div style="font-size: 22px;"> ${when} ${summary} </div>`);
     }
 
-    function showCalendar() {
+    function showcalendar() {
         if (myEvents.length > 0) {
             for (let i = 0; i < myEvents.length; i++) {
-                displayCalendar(myEvents[i]);
+                displaycalendar(myEvents[i]);
             }
         } else {
             console.log("idk man");
@@ -287,10 +286,10 @@ function doStuff(apiData) {
 
     showDaily();
     showHourly();
-    showCalendar();
+    showcalendar();
     $('#futureDays').hide();
     $('#futureTimes').hide();
-    $('#Calendar').hide();
+    $('#calendar').hide();
 
 
     function getThreeHours(array) {
@@ -347,9 +346,13 @@ function getFlags() {
     console.log("Getting flags");
     setInterval(function () {
         fetch(flagsServer)
-            .then((data) => data.json())
+            .then((data) => {
+                //console.log(data);
+                
+                return data.json();
+            })
             .then((curr) => {
-                console.log("" + curr.flag);
+                //console.log("This is the JSON" + curr);
                 switch (curr.flag) {
                     case "hide":
                         state = 0;
@@ -360,7 +363,7 @@ function getFlags() {
                     case "forecast":
                         state = 2;
                         break;
-                    case "schedule":
+                    case "calendar":
                         state = 3;
                         break;
                     default:
@@ -369,11 +372,14 @@ function getFlags() {
                 }
                 toggle(state);
                 if (state >= 4) state = 0;
-            });
-    }, 1000);
+            })
+            .catch((err) =>
+                console.log(err)
+            );
+    }, 3000);
 }
 
-
+getFlags();
 
 function toggle(state) {
     switch (state) {
@@ -383,14 +389,14 @@ function toggle(state) {
 
             $('#futureDays').fadeOut(500);
             $('#futureTimes').fadeOut(500);
-            $('#Calendar').fadeOut(500);
+            $('#calendar').fadeOut(500);
             $('#line').fadeOut(1000);
             break;
             //displays the 3hourly data
         case 1:
             console.log("The case is 1, showing hourly data");
             $('#futureDays').hide();
-            $('#Calendar').hide();
+            $('#calendar').hide();
             $('#futureTimes').fadeIn(1000);
             $('#line').fadeIn(500);
             break;
@@ -399,7 +405,7 @@ function toggle(state) {
             //displays the forecast
             $('#futureDays').fadeIn(1000);
             $('#futureTimes').hide();
-            $('#Calendar').hide();
+            $('#calendar').hide();
             $('#line').fadeIn(500);
             break;
         case 3:
@@ -407,17 +413,17 @@ function toggle(state) {
             //displays the calendar
             $('#futureDays').hide();
             $('#futureTimes').hide();
-            $('#Calendar').fadeIn(1000);
+            $('#calendar').fadeIn(1000);
             $('#line').fadeIn(500);
             break;
         default:
             console.log("The case is default, showing nothing");
             $('#futureDays').hide();
             $('#futureTimes').hide();
-            $('#Calendar').hide();
+            $('#calendar').hide();
             $('#line').fadeOut(1000);
             break;
     }
 }
 
-//getFlags();
+//console.log("before getting flags function");
