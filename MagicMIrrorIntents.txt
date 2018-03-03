@@ -1,63 +1,16 @@
 {
   "intents": [
     {
-      "intent": "ShowClock"
+      "intent": "weatherToday"
     },
     {
-      "intent": "TellTime"
+      "intent": "weatherWeek"
     },
     {
-      "intent": "WeatherToday"
+      "intent": "scheduleToday"
     },
     {
-      "slots": 
-      [
-        {
-          "name": "Location",
-          "type": "AMAZON.AdministrativeArea"
-        }
-      ],
-      "intent": "WeatherIn"
-    },
-    {
-      "slots": 
-      [
-        {
-          "name": "Day",
-          "type": "AMAZON.DATE"
-        }
-      ],
-      "intent": "WeatherOn"
-    },
-    {
-      "slots": 
-      [
-        {
-          "name": "Location",
-          "type": "AMAZON.AdministrativeArea"
-        }
-        {
-          "name": "Day",
-          "type": "AMAZON.DATE"
-        }
-      ],
-      "intent": "WeatherInOn"
-    },
-    {
-      "intent": "ScheduleToday"
-    },
-    {
-      "slots": 
-      [
-        {
-          "name": "Day",
-          "type": "AMAZON.DATE"
-        }
-      ],
-      "intent": "ScheduleOn"
-    },
-    {
-      "intent": "AMAZON.HelpIntent"
+      "intent": "hide"
     }
   ]
 }
