@@ -227,7 +227,7 @@ function doStuff(apiData) {
         object.hi < 10 ? object.hi = '0' + parseInt(object.hi) : object.hi = parseInt(object.hi)
         //console.log(object.lo);
 
-        $("#futureDays").append(`<div "class='dayz'">${timeW.format("dddd")} ${object.icon} ${(object.lo)}° ${(object.hi)}°</div>`)
+        $("#futureDays").append(`<div "class='dayz'"><span style="float: left">${timeW.format("dddd")} </span> ${object.icon} ${(object.lo)}° ${(object.hi)}°</div>`)
     }
 
     function displayUpcomingTimes(object) {
@@ -235,7 +235,7 @@ function doStuff(apiData) {
         //console.log(timeW);
         object.lo < 10 ? object.lo = '0' + parseInt(object.lo) : object.lo = parseInt(object.lo)
         object.hi < 10 ? object.hi = '0' + parseInt(object.hi) : object.hi = parseInt(object.hi)
-        $("#futureTimes").append(`<div "class='timez'">${timeW.format("hh:mm a")} ${object.icon} ${parseInt(object.lo)}° ${parseInt(object.hi)}°</div>`)
+        $("#futureTimes").append(`<div "class='timez'"><span style="float: left">${timeW.format("hh:mm a")} </span> ${object.icon} ${parseInt(object.lo)}° ${parseInt(object.hi)}°</div>`)
     }
 
 
@@ -270,7 +270,16 @@ function doStuff(apiData) {
         //var when = event.start.dateTime;
         var when = moment(calEvent.start.dateTime).format("hh:mm a");
         var summary = calEvent.summary;
-        $('#calendar').append(`<div style="font-size: 22px;"> ${when} ${summary} </div>`);
+        $('#calendar').append(`<div style="font-size: 18px;">
+                                    <span style="float: left">${when} </span>
+                                    <span>${summary}</span>
+                                </div>`);
+        /**
+          <div style="font-size: 18px;">
+            <span style="float: left">${when} </span>
+            <span>${summary}</span>
+          </div>
+         */
     }
 
     function showcalendar() {
@@ -348,7 +357,7 @@ function getFlags() {
         fetch(flagsServer)
             .then((data) => {
                 //console.log(data);
-                
+
                 return data.json();
             })
             .then((curr) => {
@@ -391,6 +400,7 @@ function toggle(state) {
             $('#futureTimes').fadeOut(500);
             $('#calendar').fadeOut(500);
             $('#line').fadeOut(1000);
+            $('#line2').fadeOut(1000);
             break;
             //displays the 3hourly data
         case 1:
@@ -413,8 +423,10 @@ function toggle(state) {
             //displays the calendar
             $('#futureDays').hide();
             $('#futureTimes').hide();
+            $('#line2').fadeIn(500);
             $('#calendar').fadeIn(1000);
-            $('#line').fadeIn(500);
+            $('#line').hide();
+
             break;
         default:
             console.log("The case is default, showing nothing");
@@ -422,6 +434,7 @@ function toggle(state) {
             $('#futureTimes').hide();
             $('#calendar').hide();
             $('#line').fadeOut(1000);
+            $('#line2').fadeOut(1000);
             break;
     }
 }
