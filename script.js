@@ -1,3 +1,16 @@
+var date = new moment();
+var dayInMilliseconds = 1000 * 60 * 60 * 12;
+
+var updateTime = setInterval(function () {
+    //var time_display = $("#time").text(time.format("hh:mm:ss a"));
+    var time = new moment();
+    var time_display = document.getElementById("time").innerHTML = time.format("hh:mm a");
+}, 10);
+
+var date_display = $("#date").text(date.format("dddd, MMM Do"));
+//date_display();
+//setInterval(date_display, 50000);
+
 //openweather key: 898b69392d37088b5c01a7c774335e37
 var CLIENT_ID = '525578933953-796qjd2icf4lufkl8f049eds4t2os7v3.apps.googleusercontent.com';
 var API_KEY = 'AIzaSyDhXkyz5EXPDNVznuu_1Bin2WT5evWTsOI';
@@ -208,18 +221,7 @@ function getForecast() {
 
 
 function doStuff(apiData) {
-    var date = new moment();
-    var dayInMilliseconds = 1000 * 60 * 60 * 12;
 
-    var updateTime = setInterval(function () {
-        //var time_display = $("#time").text(time.format("hh:mm:ss a"));
-        var time = new moment();
-        var time_display = document.getElementById("time").innerHTML = time.format("hh:mm a");
-    }, 10);
-
-    var date_display = $("#date").text(date.format("dddd, MMM Do"));
-    //date_display();
-    //setInterval(date_display, 50000);
 
     function displayUpcomingDays(object) {
         let timeW = moment(object.time);
@@ -270,7 +272,7 @@ function doStuff(apiData) {
         //var when = event.start.dateTime;
         var when = moment(calEvent.start.dateTime).format("hh:mm a");
         var summary = calEvent.summary;
-        $('#calendar').append(`<div style="font-size: 30px;">
+        $('#calendar').append(`<div style="font-size: 29px;">
                                     <span style="float: left">${when} </span>
                                     <span>${summary}</span>
                                 </div>`);
@@ -400,7 +402,6 @@ function toggle(state) {
             $('#futureTimes').fadeOut(500);
             $('#calendar').fadeOut(500);
             $('#line').fadeOut(1000);
-            $('#line2').fadeOut(1000);
             break;
             //displays the 3hourly data
         case 1:
@@ -417,15 +418,15 @@ function toggle(state) {
             $('#futureTimes').hide();
             $('#calendar').hide();
             $('#line').fadeIn(500);
+
             break;
         case 3:
             console.log("The case is 3, showing the calendar");
             //displays the calendar
             $('#futureDays').hide();
             $('#futureTimes').hide();
-            $('#line2').fadeIn(500);
             $('#calendar').fadeIn(1000);
-            $('#line').hide();
+            $('#line').fadeIn(500);
 
             break;
         default:
@@ -434,7 +435,6 @@ function toggle(state) {
             $('#futureTimes').hide();
             $('#calendar').hide();
             $('#line').fadeOut(1000);
-            $('#line2').fadeOut(1000);
             break;
     }
 }
