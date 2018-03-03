@@ -270,7 +270,7 @@ function doStuff(apiData) {
         //var when = event.start.dateTime;
         var when = moment(calEvent.start.dateTime).format("hh:mm a");
         var summary = calEvent.summary;
-        $('#calendar').append(`<div style="font-size: 18px;">
+        $('#calendar').append(`<div style="font-size: 30px;">
                                     <span style="float: left">${when} </span>
                                     <span>${summary}</span>
                                 </div>`);
