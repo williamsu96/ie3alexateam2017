@@ -1,6 +1,6 @@
 # Alexa Magic Mirror
 
-This is a web app that responds to calls made to the corresponding Alexa app. It is meant to be run on a raspberry pi using the chromium browser in fullscreen. We put a screen behind a mirror 
+This is a web app that responds to calls made to the corresponding Alexa app. It is meant to be run on a raspberry pi using the chromium browser in fullscreen. We glued a monitor display behind a mirror.
 
 ## Getting Started
 
@@ -9,9 +9,13 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 The things you need to install
-
-- You will a raspberry pi with chromium
+**For a Real Mirror**
+- You will need a raspberry pi with chromium
 - python installed on that pi
+
+**For in-browser testing**
+- any browser
+- python
 
 ### Installing
 
